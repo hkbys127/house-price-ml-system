@@ -5,7 +5,6 @@ from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy import Engine, create_engine
 
-
 BASE_DIR = Path(__file__).resolve().parents[1]
 
 
@@ -19,7 +18,7 @@ class Settings(BaseSettings):
     )
 
 
-settings = Settings()
+settings = Settings()  # type: ignore
 
 
 def get_engine() -> Engine:

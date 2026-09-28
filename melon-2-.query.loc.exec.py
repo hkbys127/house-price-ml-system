@@ -68,4 +68,13 @@ def clean_and_over100(df: pd.DataFrame) -> pd.DataFrame:
         errors="coerce",
     )
 
-    result_df = df.loc[df["price"] > 100, price]
+    result_df = df.loc[df["price"] > 100, ["price"]]
+    return result_df
+
+    orders = orders.loc[(orders["amount"] > 0)&(orders["amount"] <= 1000,), :]
+
+    orders = (orders
+        .pipe(lambda df: df.loc[(df["amount"] > 0),:])
+        .pipe(lambda df: df.loc[(df["amount"] <= 1000),:])
+    )
+           

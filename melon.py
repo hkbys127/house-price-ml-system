@@ -48,7 +48,7 @@ def fill_semantic_absence(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     dataframe = dataframe.copy()
 
-    for column in ABSENCE_CATAGORY_COLUMNS:
+    for column in ABSENCE_CATEGORY_COLUMNS:
         if column in dataframe.columns:
             dataframe[column] = dataframe[column].fillna("None")
 

@@ -192,7 +192,7 @@ def main() -> None:
             name=TEST_CLEAN_TABLE,
             con=connection,
             if_exists="replace",
-            index=False.
+            index=False,
             chunksize=200,
             method="multi",
         )

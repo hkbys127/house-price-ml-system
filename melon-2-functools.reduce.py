@@ -38,9 +38,8 @@ dataframe = reduce(lambda df, func: func(df), pipeline, dataframe)
 
 
 """
-why use lambda df
+why use lambda df(if not use)
 """
-
 
 # 先单独定义一个函数
 def apply_func(data, action):
@@ -49,3 +48,5 @@ def apply_func(data, action):
 
 # 然后传给 reduce
 dataframe = reduce(apply_func, pipeline, dataframe)
+
+
