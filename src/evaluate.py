@@ -69,17 +69,20 @@ def evaluate_model(
         y_dev,
         cv=cross_validation,
         scoring=scoring,
-        return_train_score=False,
+        return_train_score=True,
         n_jobs=-1,
     )
 
+    train_rmse = -results["train_rmse"]
     rmse = -results["test_rmse"]
     mae = -results["test_mae"]
     r2 = results["test_r2"]
 
     return {
         "model": model_name,
+        "train_rmse_mean": np.mean(train_rmse),
         "cv_rmse_mean": np.mean(rmse),
+        "rmse_gap": (np.mean(rmse) - np.mean(train_rmse)),
         "cv_rmse_std": np.std(rmse),
         "cv_mae_mean": np.mean(mae),
         "cv_mae_std": np.std(mae),
