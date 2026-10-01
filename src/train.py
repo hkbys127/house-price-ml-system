@@ -48,11 +48,13 @@ def main() -> None:
 
         experiment_results.append(result)
 
-        print(f"RMSE: {result['cv_rmse_mean']:,.2f}")
+        print(f"Train RMSE: {result['train_rmse_mean']:,.2f}")
 
-        print(f"MAE:  {result['cv_mae_mean']:,.2f}")
+        print(f"CV RMSE: {result['cv_rmse_mean']:,.2f}")
 
-        print(f"R2:   {result['cv_r2_mean']:.4f}")
+        print(f"CV MAE:  {result['cv_mae_mean']:,.2f}")
+
+        print(f"CV R2:   {result['cv_r2_mean']:.4f}")
 
         print()
 
