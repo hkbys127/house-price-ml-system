@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from sklearn.base import BaseEstimator
+from typing import Any
+
+from lightgbm import LGBMRegressor
 from sklearn.dummy import DummyRegressor
 from sklearn.ensemble import (
     GradientBoostingRegressor,
@@ -9,9 +11,10 @@ from sklearn.ensemble import (
 )
 from sklearn.linear_model import Lasso, LinearRegression, Ridge
 from sklearn.tree import DecisionTreeRegressor
+from xgboost import XGBRegressor
 
 
-def get_models() -> dict[str, BaseEstimator]:
+def get_models() -> dict[str, Any]:
     """
     Return the models used in the current experiment.
     """
@@ -53,5 +56,25 @@ def get_models() -> dict[str, BaseEstimator]:
             max_depth=5,
             min_samples_leaf=5,
             random_state=42,
+        ),
+        "xgboost": XGBRegressor(
+            n_estimators=500,
+            learning_rate=0.05,
+            max_depth=3,
+            subsample=0.8,
+            colsample_bytree=0.8,
+            objective="reg:squarederror",
+            random_state=42,
+            n_jobs=1,
+        ),
+        "lightgbm": LGBMRegressor(
+            n_estimators=500,
+            learning_rate=0.05,
+            num_leaves=31,
+            subsample=0.8,
+            colsample_bytree=0.8,
+            random_state=42,
+            n_jobs=1,
+            verbosity=-1,
         ),
     }
