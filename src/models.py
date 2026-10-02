@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from catboost import CatBoostRegressor
 from lightgbm import LGBMRegressor
 from sklearn.dummy import DummyRegressor
 from sklearn.ensemble import (
@@ -78,3 +79,15 @@ def get_models() -> dict[str, Any]:
             verbosity=-1,
         ),
     }
+
+
+def get_catboost_model() -> CatBoostRegressor:
+    return CatBoostRegressor(
+        iterations=500,
+        learning_rate=0.05,
+        depth=6,
+        loss_function="RMSE",
+        random_seed=42,
+        verbose=False,
+        thread_count=-1,
+    )

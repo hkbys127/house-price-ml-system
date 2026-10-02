@@ -4,7 +4,10 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.evaluate import evaluate_model
+from src.evaluate import (
+    evaluate_catboost,
+    evaluate_model,
+)
 from src.models import get_models
 from src.split import (
     load_training_data,
@@ -57,7 +60,26 @@ def main() -> None:
         print(f"CV R2:   {result['cv_r2_mean']:.4f}")
 
         print()
+    print("Evaluating: catboost_native")
 
+    catboost_result = evaluate_catboost(
+        X_dev=X_dev,
+        y_dev=y_dev,
+    )
+
+    experiment_results.append(catboost_result)
+
+    print(f"Train RMSE: {catboost_result['train_rmse_mean']:,.2f}")
+
+    print(f"CV RMSE:    {catboost_result['cv_rmse_mean']:,.2f}")
+
+    print(f"RMSE Gap:   {catboost_result['rmse_gap']:,.2f}")
+
+    print(f"CV MAE:     {catboost_result['cv_mae_mean']:,.2f}")
+
+    print(f"CV R2:      {catboost_result['cv_r2_mean']:.4f}")
+
+    print()
     results_dataframe = pd.DataFrame(experiment_results)
 
     results_dataframe = results_dataframe.sort_values(
