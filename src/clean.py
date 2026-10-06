@@ -6,7 +6,6 @@ from sqlalchemy import text
 
 from src.database import get_engine
 
-
 TRAIN_RAW_TABLE = "house_train_raw"
 TEST_RAW_TABLE = "house_test_raw"
 
@@ -43,18 +42,11 @@ def normalize_text_columns(dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     dataframe = dataframe.copy()
 
-    text_columns = dataframe.select_dtypes(
-        include=["object", "string"]
-    ).columns
+    text_columns = dataframe.select_dtypes(include=["object", "string"]).columns
 
     for column in text_columns:
-        dataframe[column] = (
-            dataframe[column]
-            .astype("string")
-            .str.strip()
-            .replace("", pd.NA)
-        )
-
+        s = dataframe[column] = dataframe[column].astype("string").str.strip()
+        dataframe[column] = s.mask(s.eq(""))
     return dataframe
 
 
@@ -64,9 +56,7 @@ def replace_infinite_values(dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     dataframe = dataframe.copy()
 
-    numeric_columns = dataframe.select_dtypes(
-        include=["number"]
-    ).columns
+    numeric_columns = dataframe.select_dtypes(include=["number"]).columns
 
     dataframe[numeric_columns] = dataframe[numeric_columns].replace(
         [np.inf, -np.inf],
@@ -92,28 +82,20 @@ def fill_semantic_absence(dataframe: pd.DataFrame) -> pd.DataFrame:
 
 def validate_id_column(dataframe: pd.DataFrame, table_name: str) -> None:
     if ID_COLUMN not in dataframe.columns:
-        raise ValueError(
-            f"{table_name} does not contain the '{ID_COLUMN}' column."
-        )
+        raise ValueError(f"{table_name} does not contain the '{ID_COLUMN}' column.")
 
     if dataframe[ID_COLUMN].isna().any():
-        raise ValueError(
-            f"{table_name} contains missing IDs."
-        )
+        raise ValueError(f"{table_name} contains missing IDs.")
 
     duplicated_count = dataframe[ID_COLUMN].duplicated().sum()
 
     if duplicated_count > 0:
-        raise ValueError(
-            f"{table_name} contains {duplicated_count} duplicated IDs."
-        )
+        raise ValueError(f"{table_name} contains {duplicated_count} duplicated IDs.")
 
 
 def validate_target(dataframe: pd.DataFrame) -> None:
     if TARGET_COLUMN not in dataframe.columns:
-        raise ValueError(
-            f"Training data does not contain '{TARGET_COLUMN}'."
-        )
+        raise ValueError(f"Training data does not contain '{TARGET_COLUMN}'.")
 
     dataframe[TARGET_COLUMN] = pd.to_numeric(
         dataframe[TARGET_COLUMN],
@@ -121,9 +103,7 @@ def validate_target(dataframe: pd.DataFrame) -> None:
     )
 
     if dataframe[TARGET_COLUMN].isna().any():
-        raise ValueError(
-            "Training data contains invalid or missing sale prices."
-        )
+        raise ValueError("Training data contains invalid or missing sale prices.")
 
     if (dataframe[TARGET_COLUMN] <= 0).any():
         raise ValueError(
@@ -152,15 +132,9 @@ def clean_dataframe(
     if is_training_data:
         validate_target(dataframe)
     elif TARGET_COLUMN in dataframe.columns:
-        raise ValueError(
-            f"Test data unexpectedly contains '{TARGET_COLUMN}'."
-        )
+        raise ValueError(f"Test data unexpectedly contains '{TARGET_COLUMN}'.")
 
-    dataframe = (
-        dataframe
-        .sort_values(ID_COLUMN)
-        .reset_index(drop=True)
-    )
+    dataframe = dataframe.sort_values(ID_COLUMN).reset_index(drop=True)
 
     return dataframe
 
@@ -169,9 +143,7 @@ def validate_matching_features(
     train_dataframe: pd.DataFrame,
     test_dataframe: pd.DataFrame,
 ) -> None:
-    train_feature_columns = set(train_dataframe.columns) - {
-        TARGET_COLUMN
-    }
+    train_feature_columns = set(train_dataframe.columns) - {TARGET_COLUMN}
     test_feature_columns = set(test_dataframe.columns)
 
     missing_from_test = train_feature_columns - test_feature_columns
