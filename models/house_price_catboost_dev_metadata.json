@@ -1,0 +1,10 @@
+{
+  "model_type": "CatBoostRegressor",
+  "artifact_stage": "development",
+  "training_rows": 1168,
+  "feature_count": 79,
+  "numeric_feature_count": 36,
+  "categorical_feature_count": 43,
+  "random_state": 42,
+  "note": "Development artifact only. Final holdout has not been used."
+}
