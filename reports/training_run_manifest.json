@@ -1,0 +1,67 @@
+{
+  "git_head": "9974502995907bbeaed5592a305d6053a6f53921",
+  "source_hashes": {
+    "src\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src\\baseline.py": "32f5f647669a4ef7caa0b79d3e555efffd9ee8cbeff113ec56f174cc3a4d51db",
+    "src\\catboost_utils.py": "c5164586cdb179feeb07bda2a12aa6e5fa61833898d6993737bb6c45481739a8",
+    "src\\clean.py": "b2cebd3a9efe1a1ec46113b553db71756ba016addb1a504a70589f8a14e77952",
+    "src\\competition_data.py": "0a441aa6cb4adb9ab06e81d916e15e309fb3c33e22361f83ef7c71746424162e",
+    "src\\competition_model.py": "90c631ce92f7d0b32d2284a4eaf4cac2064bfdcdcc562a41e3807847c4756094",
+    "src\\database.py": "bf386b0e7d6b7f1fdbda65420bb290e71e6c93a34791f087b90c2e524ac07eab",
+    "src\\evaluate.py": "849f6297714d6759269dd46c95637b0cb83b2eda7150143efc3543b137febab6",
+    "src\\feature_engineering.py": "a0604e6229fcde40015bfe4d222efdef2a776db2419ddb4d48512e117f166355",
+    "src\\features.py": "1782f4c3b032cc9f19457f7feb09c7efd46c012272fd200f702bdc80367ed461",
+    "src\\finalize.py": "9f9cde9dc0719c37029593a5ff760bf2e9a24c10b2b29a1359ddc8ec786da89b",
+    "src\\ingest.py": "4a5208dec3eb17024a67aa93b7ba2b939bcb9b7bcda8d59c1db78833ea4687d2",
+    "src\\leaderboard.py": "10a9f68d46ce5fcd26b977dfa84dac233350bdde343db62a9865d4d1e2d0db09",
+    "src\\models.py": "7194c6a76a0dfe5e719cfe2e103b1e727300ceecd6774902ab362b08cdf9b908",
+    "src\\predict.py": "78fea874f42f2d6cfa1ad2e9e6901db3eb3fd1e80a7cacbb1fb3ce0099ecc902",
+    "src\\repeated_cv.py": "f221a466c20981eac51de82a241f4fc0c5680b924d8b50fda847052c66dec4f3",
+    "src\\report.py": "a1aed419c504bdfa0adf21afa5520902df99cfb79a4ec3c5d343d1fd3225f437",
+    "src\\split.py": "e182f8529fa3af0f7b48bc6978ebfd160fa601761ea15b89c6359b8ccf93de28",
+    "src\\submit.py": "22d8ef95a64f342f6ea119fbd77cf9fd79e44ba8cd6f03c5d6acef82bc69f0b5",
+    "src\\train.py": "449f115513b5ef3d55fa38b444ecd83dbe1ca38f2a1a9f9c0f4f4bfb06499a75",
+    "src\\train_candidate.py": "df2529a96659a4f886e273457998e58d551c298e6a6ebed1654913b821c49a62"
+  },
+  "data_hashes": {
+    "train.csv": "1e18addf81e5e4d347cc17ee6075bbe4a42b7fa26b9e5b063e8f692a5f929d41",
+    "test.csv": "8fdd3d829d4d986b58f845c9553b225e67dd8383624d90fb6ca1d4bed5798c1e",
+    "sample_submission.csv": "f19e99699b925aa3085c8d2ae43c62f15fbcd35e4a953b98025f8392c3ffa807"
+  },
+  "model_sha256": "bffdd6b9ec5b225a46b2309e9da6759996c6710a60bc6dbc4a7fc42dff60f27d",
+  "model_parameters": {
+    "iterations": 500,
+    "learning_rate": 0.05,
+    "depth": 6,
+    "loss_function": "RMSE",
+    "random_seed": 42,
+    "verbose": false,
+    "allow_writing_files": false,
+    "thread_count": 4
+  },
+  "library_versions": {
+    "numpy": "2.5.1",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "catboost": "1.2.10",
+    "xgboost": "3.3.0"
+  },
+  "selection": {
+    "model": "catboost_baseline",
+    "family": "catboost",
+    "variant": "baseline",
+    "seeds": [
+      42,
+      52,
+      62
+    ],
+    "folds": 5,
+    "development_rows": 1168,
+    "holdout_rows": 292,
+    "train_sha256": "1e18addf81e5e4d347cc17ee6075bbe4a42b7fa26b9e5b063e8f692a5f929d41",
+    "created_at": "2026-10-12T13:11:09.210671+00:00",
+    "rule": "Keep baseline unless Holm-adjusted corrected paired test p < 0.05",
+    "inference": "Approximate corrected resampled t; marginal 95% CIs; Holm over all pairs"
+  },
+  "submission_sha256": "c7d39d899ee1cb5ee571eb1deed3a8720eb84cc9bfc60b6cc043b28c056e6fd5"
+}

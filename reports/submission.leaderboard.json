@@ -1,0 +1,16 @@
+{
+  "competition": "house-prices-advanced-regression-techniques",
+  "file": "submission.csv",
+  "sha256": "c7d39d899ee1cb5ee571eb1deed3a8720eb84cc9bfc60b6cc043b28c056e6fd5",
+  "checked_at": "2026-10-12T13:12:30.124982+00:00",
+  "submissions": [
+    {
+      "ref": 57107857,
+      "date": "2026-10-12 13:01:35.747000",
+      "status": "SubmissionStatus.COMPLETE",
+      "public_score": "0.12633",
+      "private_score": "",
+      "description": "house-price-ml sha256:c7d39d899ee1cb5ee571eb1deed3a8720eb84cc9bfc60b6cc043b28c056e6fd5"
+    }
+  ]
+}

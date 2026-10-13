@@ -1,6 +1,6 @@
-def main():
-    print("Hello from house-price-ml-system!")
+"""Run the reproducible competition evaluation workflow."""
 
+from src.train import main
 
 if __name__ == "__main__":
     main()

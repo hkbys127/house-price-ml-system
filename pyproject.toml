@@ -1,7 +1,7 @@
 [project]
 name = "house-price-ml-system"
 version = "0.1.0"
-description = "Add your description here"
+description = "Reproducible House Prices log-target evaluation and Kaggle submission"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -26,3 +26,7 @@ dev = [
     "pytest>=9.1.1",
     "ruff>=0.16.1",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

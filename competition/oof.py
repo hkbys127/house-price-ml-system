@@ -12,6 +12,7 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import KFold
 
+from src.catboost_utils import prepare_catboost_data
 from src.evaluate import build_model_pipeline
 from src.features import get_feature_columns
 from src.models import (
@@ -168,21 +169,6 @@ def run_pipeline_oof(
     )
 
 
-def prepare_catboost_data(
-    dataframe: pd.DataFrame,
-    categorical_columns: list[str],
-) -> pd.DataFrame:
-
-    dataframe = dataframe.copy()
-
-    for column in categorical_columns:
-        dataframe[column] = (
-            dataframe[column].astype("string").fillna("__MISSING__").astype(str)
-        )
-
-    return dataframe
-
-
 def run_catboost_oof(
     X_dev: pd.DataFrame,
     y_dev: pd.Series,
@@ -259,7 +245,7 @@ def run_catboost_oof(
 def main() -> None:
     X, y = load_training_data()
 
-    X_dev, X_holdout, y_dev, y_holdout = make_holdout_split(
+    X_dev, X_holdout, y_dev, _y_holdout = make_holdout_split(
         X,
         y,
     )

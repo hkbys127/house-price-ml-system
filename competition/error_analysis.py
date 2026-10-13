@@ -67,7 +67,7 @@ def attach_features(
 
     X, y = load_training_data()
 
-    X_dev, _, y_dev, _ = make_holdout_split(
+    X_dev, _, _y_dev, _ = make_holdout_split(
         X,
         y,
     )

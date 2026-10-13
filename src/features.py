@@ -6,16 +6,19 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-
 TARGET_COLUMN = "sale_price"
 ID_COLUMN = "id"
 
 
 # Kaggle 中这个字段虽然存的是数字，
 # 但数字本身实际上是住宅类别代码。
-CATEGORICAL_CODE_COLUMNS = [
-    "ms_sub_class",
-]
+# CATEGORICAL_CODE_COLUMNS = [
+#    "m_s_sub_class",
+# ]
+# MSSubClass is semantically categorical,
+# but current OOF experiments show that treating it
+# as numeric performs better for this competition.
+CATEGORICAL_CODE_COLUMNS: list[str] = []
 
 
 def get_feature_columns(
@@ -25,19 +28,9 @@ def get_feature_columns(
     Separate feature columns into numeric and categorical groups.
     """
 
-    numeric_columns = (
-        dataframe
-        .select_dtypes(include=["number"])
-        .columns
-        .tolist()
-    )
+    numeric_columns = dataframe.select_dtypes(include=["number"]).columns.tolist()
 
-    categorical_columns = (
-        dataframe
-        .select_dtypes(exclude=["number"])
-        .columns
-        .tolist()
-    )
+    categorical_columns = dataframe.select_dtypes(exclude=["number"]).columns.tolist()
 
     for column in CATEGORICAL_CODE_COLUMNS:
         if column in numeric_columns:
@@ -56,9 +49,7 @@ def build_preprocessor(
     Build preprocessing pipelines for numeric and categorical features.
     """
 
-    numeric_columns, categorical_columns = get_feature_columns(
-        dataframe
-    )
+    numeric_columns, categorical_columns = get_feature_columns(dataframe)
 
     numeric_pipeline = Pipeline(
         steps=[

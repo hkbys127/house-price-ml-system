@@ -18,12 +18,9 @@ class Settings(BaseSettings):
     )
 
 
-settings = Settings()  # type: ignore
-
-
 def get_engine() -> Engine:
     """Create a SQLAlchemy engine for PostgreSQL."""
     return create_engine(
-        settings.database_url,
+        Settings().database_url,
         pool_pre_ping=True,
     )

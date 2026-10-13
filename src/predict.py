@@ -6,11 +6,11 @@ from typing import Any
 import joblib
 import pandas as pd
 
-from src.catboost_utils import prepare_catboost_data
+from src.competition_model import predict_artifact
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 
-MODEL_PATH = BASE_DIR / "models" / "house_price_catboost_dev.joblib"
+MODEL_PATH = BASE_DIR / "models" / "house_price_final.joblib"
 
 
 def load_artifact() -> dict[str, Any]:
@@ -26,11 +26,7 @@ def predict_price(
 
     artifact = load_artifact()
 
-    model = artifact["model"]
-
-    feature_columns = artifact["feature_columns"]
-
-    categorical_columns = artifact["categorical_columns"]
+    feature_columns = artifact["raw_feature_columns"]
 
     missing_columns = [
         column for column in feature_columns if column not in house_features
@@ -44,30 +40,16 @@ def predict_price(
     # 保证与训练阶段完全相同的列顺序。
     input_dataframe = input_dataframe[feature_columns]
 
-    input_dataframe = prepare_catboost_data(
-        input_dataframe,
-        categorical_columns,
-    )
-
-    prediction = model.predict(input_dataframe)
+    prediction = predict_artifact(artifact, input_dataframe)
 
     return float(prediction[0])
 
 
 def main() -> None:
-    from src.split import (
-        load_training_data,
-        make_holdout_split,
-    )
+    from src.competition_data import load_competition_data
 
-    X, y = load_training_data()
-
-    X_dev, _, _, _ = make_holdout_split(
-        X,
-        y,
-    )
-
-    sample = X_dev.iloc[0].to_dict()
+    _, test = load_competition_data()
+    sample = test.drop(columns="id").iloc[0].to_dict()
 
     prediction = predict_price(sample)
 
